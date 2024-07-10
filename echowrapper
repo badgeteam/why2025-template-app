@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+cat <<EOF| sed -e "s|/home/julian/the_projects/why-fw-p4/esp-idf-tools/tools/riscv32-esp-elf/esp-13.2.0_20240305/riscv32-esp-elf/|/.../|g;s/ /\n    /g"
+$*
+EOF
+$*
