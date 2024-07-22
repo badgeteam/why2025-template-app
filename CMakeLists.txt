@@ -25,3 +25,6 @@ add_executable(main.elf
 target_include_directories(main.elf PUBLIC
     include
 )
+set_target_properties(main.elf PROPERTIES LINK_DEPENDS
+    "${CMAKE_CURRENT_LIST_DIR}/badgesdk/badge_jump_table.ld;${CMAKE_CURRENT_LIST_DIR}/badgesdk/linker.ld"
+)
