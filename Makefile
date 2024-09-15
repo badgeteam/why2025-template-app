@@ -1,3 +1,7 @@
+
+# SPDX-License-Identifier: CC0-1.0
+# Copyright © 2024, Badge.team
+
 PORT ?= /dev/ttyACM0
 BUILDDIR ?= build
 MAKEFLAGS += --silent
@@ -8,6 +12,7 @@ IDF_BRANCH ?= release/v5.3
 #IDF_COMMIT ?= c57b352725ab36f007850d42578d2c7bc858ed47
 IDF_EXPORT_QUIET ?= 1
 IDF_GITHUB_ASSETS ?= dl.espressif.com/github_assets
+LINKAGE ?= $(shell cat .LINKAGE_TYPE 2>/dev/null || echo flash_app)
 
 SHELL := /usr/bin/env bash
 
@@ -53,9 +58,8 @@ clean:
 .PHONY: build
 build:
 	source "$(IDF_PATH)/export.sh" >/dev/null && \
-		cmake -B $(BUILDDIR) && \
-		cmake --build $(BUILDDIR) && \
-		riscv32-esp-elf-objcopy -O binary $(BUILDDIR)/main.elf $(BUILDDIR)/main.bin
+		cmake -Dlinkage=$(LINKAGE) -B $(BUILDDIR) && \
+		cmake --build $(BUILDDIR)
 
 # Hardware
 
